@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Crear cuenta | Centinela Digital</title>
+
+<style>
+body { 
+    font-family: Arial; 
+    background: #e8e8fa; 
+    margin: 0; 
+    color: #373047;
+}
+.menu {
+    background: #e5e4f8; 
+    width: 170px; 
+    height: 100vh; 
+    position: fixed; 
+    padding: 15px; 
+}
+.menu img { 
+    width: 100%; 
+    max-height: 90px; 
+    object-fit: contain; 
+}
+.menu a { 
+    display: block; 
+    padding: 14px; 
+    color: #655c75; 
+    text-decoration: none; 
+    border-radius: 8px; 
+}
+.menu a:hover { 
+    background: #9870dc; 
+    color: white; }
+.contenido { 
+    margin-left: 200px; 
+    padding: 20px; }
+.barra { 
+    padding: 15px;
+    display: flex; 
+    justify-content: space-between; 
+}
+.tarjeta { 
+    background: #fff0f5; 
+    padding: 30px; 
+    border: 1px solid #e5c5dc; 
+    border-radius: 18px; 
+    max-width: 500px; 
+    margin: 30px auto; 
+}
+input { 
+    display: block; 
+    width: 95%; 
+    padding: 12px; 
+    margin: 10px 0 20px; 
+    border: 1px solid #dec9e2; 
+    border-radius: 8px; 
+    background: white; 
+}
+button { 
+    background: #9470d9;
+    color: white; 
+    padding: 12px 20px; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; }
+button:disabled { 
+    opacity: .5; 
+    cursor: not-allowed; 
+}
+a {
+    color: #7655b4; }
+.mensaje {
+    background: #e4d4ed; 
+    padding: 10px; 
+    border-radius: 8px; 
+    margin-bottom: 15px; }
+.error { 
+    color: #b32645; }
+@media(max-width:700px) {
+    .menu { width: 110px; 
+        padding: 8px; }
+    .contenido { 
+        margin-left: 125px; 
+        padding: 10px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="menu">
+    <img src="image.png" alt="Logotipo">
+    <h3>Centinela Digital</h3>
+    <p>MENÚ PRINCIPAL</p>
+    <a href="/iniciar_sesion">⌂ Inicio</a>
+    <a href="/reportes">▤ Reportes</a>
+    <a href="/nosotros">♧ Sobre nosotros</a>
+    <a href="/contactos">☏ Contacto</a>
+</div>
+
+<div class="contenido">
+
+    <div class="barra">
+        <strong>Tu espacio de apoyo</strong>
+         <a href="/iniciar_sesion">⌂ Inicio</a>
+    </div>
+
+    <div class="tarjeta">
+        <h2>Crear una cuenta</h2>
+        <p>Únete a Centinela Digital. Tu voz importa.</p>
+
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensaje in mensajes %}
+                <div class="mensaje">{{ mensaje }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="/register" id="registro">
+
+            <label>Nombre completo</label>
+            <input type="text" name="nombre" placeholder="Tu nombre completo" required>
+
+            <label>Correo electrónico</label>
+            <input type="email" name="email" placeholder="ejemplo@gmail.com" required>
+
+            <label>Contraseña</label>
+            <input type="password" id="password" name="password"
+            placeholder="Mínimo 6 caracteres" minlength="6" required>
+
+            <label>Confirmar contraseña</label>
+            <input type="password" id="confirm" name="confirm_password"
+            placeholder="Repite tu contraseña" required>
+
+            <p id="mensaje" class="error"></p>
+
+            <button type="submit">Crear cuenta ➜</button>
+        </form>
+
+        <p>¿Ya tienes una cuenta? <a href="/iniciar_sesion">⌂ Inicio</a>
+    </div>
+
+</div>
+
+<script>
+document.getElementById("registro").addEventListener("submit", function(e) {
+    let pass = document.getElementById("password").value;
+    let confirm = document.getElementById("confirm").value;
+    let mensaje = document.getElementById("mensaje");
+
+    if (pass.length < 6 || !/[0-9]/.test(pass) ||
+        !/[!@#$%^&*(),.?":{}|<>]/.test(pass)) {
+        e.preventDefault();
+        mensaje.textContent = "La contraseña necesita 6 caracteres, un número y un símbolo.";
+    } else if (pass !== confirm) {
+        e.preventDefault();
+        mensaje.textContent = "Las contraseñas no coinciden.";
+    }
+});
+</script>
+
+</body>
+</html>
