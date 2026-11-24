@@ -4,22 +4,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Centinela Digital</title>
+<title>Información | Centinela Digital</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background: #e8e8fa;
+    background: #f0eff9;
     margin: 0;
     color: #373047;
 }
 
+/* MENU */
 .menu {
     background: #e5e4f8;
-    width: 170px;
+    width: 190px;
     height: 100vh;
     position: fixed;
-    padding: 15px;
+    padding: 18px;
     border-right: 1px solid #d4c5e5;
 }
 
@@ -31,42 +36,48 @@ body {
 
 .menu a {
     display: block;
-    padding: 14px;
+    padding: 13px;
     color: #655c75;
     text-decoration: none;
     border-radius: 8px;
+    margin: 5px 0;
 }
 
-.menu a:hover {
-    background: #9870dc;
-    color: white;
+.menu a:hover, .activo {
+    background: #9470d9;
+    color: white !important;
 }
 
+/* CONTENIDO */
 .contenido {
-    margin-left: 200px;
-    padding: 20px 25px;
+    margin-left: 210px;
+    padding: 25px;
 }
 
+/* BARRA */
 .barra {
-    background: #e5e4f8;
+    background: white;
     padding: 15px;
+    border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+    gap: 10px;
 }
 
 input {
     padding: 12px;
     border: 1px solid #dec9e2;
     border-radius: 8px;
-    background: #fff0f5;
+    background: #faf8ff;
+    width: 55%;
 }
 
 button {
     background: #9470d9;
     color: white;
-    padding: 12px 18px;
+    padding: 12px 16px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -76,88 +87,95 @@ button:hover {
     background: #7654b5;
 }
 
-.boton {
-    display: inline-block;
-    background: #9470d9;
-    color: white;
-    padding: 12px 18px;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.boton:hover {
-    background: #7654b5;
-}
-
+/* PRESENTACION */
 .bienvenida {
     background: #d9bfd9;
     padding: 30px;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    border-radius: 16px;
+    margin-bottom: 25px;
 }
 
-.bienvenida img {
-    width: 180px;
-}
-
-.inferior {
-    display: flex;
-    gap: 20px;
-}
-
-.tarjeta {
-    background: #fff0f5;
-    padding: 20px;
-    border: 1px solid #e5c5dc;
-    border-radius: 18px;
-    margin-bottom: 15px;
-}
-
-.inferior .tarjeta {
-    flex: 1;
-}
-
-.tarjeta img {
-    width: 100%;
-    max-height: 230px;
-    object-fit: contain;
-}
-
-h1 {
+.bienvenida h1 {
+    margin-top: 0;
     font-size: 28px;
 }
 
-h2 {
-    font-size: 21px;
+.bienvenida p {
+    line-height: 1.7;
 }
 
+/* TARJETAS */
+.inferior {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.tarjeta {
+    background: white;
+    padding: 22px;
+    border: 1px solid #e5c5dc;
+    border-radius: 14px;
+    flex: 1;
+    box-shadow: 0 3px 8px #00000008;
+}
+
+.tarjeta h2 {
+    color: #7955ad;
+    font-size: 20px;
+}
+
+.tarjeta p {
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.destacado {
+    border-left: 5px solid #9470d9;
+}
+
+/* PIE */
+.pie {
+    text-align: center;
+    padding: 20px;
+    color: #776b85;
+}
+
+/* CELULARES */
 @media (max-width: 700px) {
     .menu {
-        width: 110px;
+        width: 120px;
         padding: 8px;
     }
 
+    .menu a {
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+
     .contenido {
-        margin-left: 125px;
+        margin-left: 130px;
         padding: 10px;
     }
 
-    .inferior, .bienvenida {
+    .inferior {
         flex-direction: column;
     }
 
-    .bienvenida img {
-        width: 130px;
+    .barra {
+        flex-direction: column;
     }
 
-    .barra {
-        flex-wrap: wrap;
-        gap: 10px;
+    input {
+        width: 100%;
+    }
+
+    .bienvenida {
+        padding: 20px;
+    }
+
+    button {
+        margin: 3px;
     }
 }
 </style>
@@ -174,80 +192,161 @@ h2 {
     <p>MENÚ PRINCIPAL</p>
 
     <a href="{{ url_for('inicio') }}">⌂ Inicio</a>
-
-    <a href="{{ url_for('pagina_reportes') }}">🗎 Reportes</a>
-
+    <a href="{{ url_for('pagina_reportes') }}">▤ Reportes</a>
     <a href="{{ url_for('nosotros') }}">♧ Sobre nosotros</a>
-
     <a href="{{ url_for('contactos') }}">☏ Contacto</a>
 
 </div>
 
-
-<!-- CONTENIDO PRINCIPAL -->
+<!-- CONTENIDO -->
 <div class="contenido">
 
     <!-- BARRA SUPERIOR -->
-     <div class="barra">
+    <div class="barra">
 
-        <input type="search" placeholder="Buscar orientación, reportes o ayuda">
+        <input type="search"
+        placeholder="Buscar orientación, reportes o ayuda">
 
         <div>
-            <button onclick="location.href='{{ url_for('iniciar_sesion') }}'" class="boton">
+            <button onclick="location.href='{{ url_for('iniciar_sesion') }}'">
                 Iniciar sesión
             </button>
 
-            <button onclick="location.href='{{ url_for('crear_cuenta') }}'" class="boton">
+            <button onclick="location.href='{{ url_for('crear_cuenta') }}'">
                 Crear cuenta
             </button>
         </div>
 
     </div>
 
-
     <!-- BIENVENIDA -->
+    <div class="bienvenida">
+
+        <h1>Centro de información</h1>
+
+        <p>
+            Bienvenido a Centinela Digital, un espacio diseñado
+            para informar, prevenir y orientar sobre situaciones
+            de violencia comunitaria. Aquí encontrarás información
+            sobre sus diferentes manifestaciones, consecuencias y
+            alternativas para solicitar apoyo.
+        </p>
+
+    </div>
+
+    <!-- PRIMERAS TARJETAS -->
+    <div class="inferior">
+
+        <div class="tarjeta destacado">
+
+            <h2>¿Qué es la violencia?</h2>
+
+            <p>
+                La violencia es el uso intencional de la fuerza
+                o del poder contra una persona, un grupo o una
+                comunidad, que puede provocar daños físicos,
+                psicológicos o sociales.
+            </p>
+
+            <p>
+                Puede manifestarse mediante agresiones físicas,
+                amenazas, intimidación, discriminación,
+                hostigamiento o violencia verbal.
+            </p>
+
+        </div>
+
+        <div class="tarjeta destacado">
+
+            <h2>¿Qué es el estrés crónico?</h2>
+
+            <p>
+                Es una respuesta prolongada del cuerpo y la mente
+                ante situaciones de presión o preocupación que
+                se mantienen durante un periodo extenso.
+            </p>
+
+            <p>
+                La exposición constante a situaciones de violencia
+                puede afectar el bienestar emocional, la concentración
+                y la vida cotidiana de las personas.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- SEGUNDAS TARJETAS -->
     <div class="inferior">
 
         <div class="tarjeta">
-            <h2>¿Que es el estres cronico?</h2>
+
+            <h2>Prevención de la violencia</h2>
 
             <p>
-                Es una respuesta prolongada del cuenpo y la mente 
-                anate situaciones de presion , amenaza o cambio que 
-                duran semanas , meses o años sin resolverse
+                La prevención consiste en identificar situaciones
+                de riesgo, promover el respeto y fomentar ambientes
+                seguros dentro de las comunidades.
             </p>
+
+            <p>
+                Algunas acciones importantes son:
+            </p>
+
+            <ul>
+                <li>Promover el respeto y la convivencia.</li>
+                <li>Identificar señales de violencia.</li>
+                <li>Fomentar la comunicación.</li>
+                <li>Informar sobre situaciones de riesgo.</li>
+            </ul>
+
         </div>
+
+        <div class="tarjeta">
+
+            <h2>¿Dónde buscar ayuda?</h2>
+
+            <p>
+                Cuando una persona atraviesa una situación de
+                violencia, es importante que pueda acudir a
+                personas e instituciones de confianza.
+            </p>
+
+            <ul>
+                <li>Autoridades escolares.</li>
+                <li>Instituciones de atención comunitaria.</li>
+                <li>Servicios de orientación psicológica.</li>
+                <li>Autoridades de protección correspondientes.</li>
+            </ul>
+
+            <p>
+                Pedir apoyo es un paso importante para proteger
+                el bienestar y la seguridad.
+            </p>
+
+        </div>
+
     </div>
 
-
-    <!-- TARJETAS INFERIORES -->
-<div class="inferior">
-
+    <!-- OBJETIVO -->
     <div class="tarjeta">
 
-        <h2>¿Que es la violencia?</h2>
+        <h2>Nuestro compromiso</h2>
+
         <p>
-            La violencia es el uso deliberado de la fuerza fisica,el poder
-            a la coeracion (fisica,psicologica verval y social) contra uno mismo
-            otra persona, un grupo o una comunidad.cuando una persona esta expuesta de 
-            forma repetida a entonos violentos o situaciones de acisi, el ccerebro 
-            interpreta de manera continua que la vida o integridad estan en riesgo
+            En Centinela Digital buscamos facilitar la detección,
+            el registro, la atención y el seguimiento de situaciones
+            de violencia comunitaria, promoviendo una cultura de
+            prevención, orientación y apoyo.
         </p>
+
     </div>
 
-    <div class="tarjeta">
-
-        <h2>prevencion o ayuda</h2>
-
-        <p>
-            Redes de apoyo e intituciones:acudir a espacion seguros autoridades 
-            escolares o plataformas institucionales de reporte y canalizacion.
-        </p>
-        <p>
-            Atencion especializada:buscar orientacion psicologica o medica para 
-            regular los niveles y tratar el impacto emocional
-        </p>
-      
+    <div class="pie">
+        <p>Centinela Digital | Información y prevención comunitaria</p>
     </div>
 
 </div>
+
+</body>
+</html>
