@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Iniciar sesión | Centinela Digital</title>
+<style>
+body {
+    font-family: Arial;
+    background: #e8e8fa;
+    color: #373047;
+    margin: 0;
+}
+.tarjeta {
+    background: #fff0f5;
+    padding: 30px;
+    border-radius: 18px;
+    max-width: 400px;
+    margin: 100px auto;
+}
+input {
+    display: block;
+    width: 95%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid #dec9e2;
+    border-radius: 8px;
+}
+button {
+    background: #9470d9;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+a { color: #7655b4; }
+.mensaje { padding: 10px; }
+</style>
+</head>
+<body>
+
+<div class="tarjeta">
+    <h2>Iniciar sesión</h2>
+    <p>Bienvenido a Centinela Digital.</p>
+
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+        {% for categoria, mensaje in mensajes %}
+            <div class="mensaje">{{ mensaje }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('iniciar_sesion') }}">
+
+        <label>Correo electrónico</label>
+        <input type="email" name="email" required>
+
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Entrar ➜</button>
+    </form>
+
+    <p>¿No tienes cuenta?
+        <a href="{{ url_for('crear_cuenta') }}">Crear cuenta</a>
+    </p>
+
+    <a href="/">Volver al inicio</a>
+</div>
+
+</body>
+</html>

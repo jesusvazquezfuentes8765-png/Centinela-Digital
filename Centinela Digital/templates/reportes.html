@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reportes | Centinela Digital</title>
+<style>
+body {
+    font-family: Arial;
+    background: #e8e8fa;
+    color: #373047;
+    padding: 25px;
+}
+.tarjeta {
+    background: #fff0f5;
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 600px;
+    margin: auto;
+}
+input, textarea {
+    width: 95%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #dec9e2;
+    border-radius: 8px;
+}
+button {
+    background: #9470d9;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.reporte {
+    background: white;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="tarjeta">
+    <h2>Registrar un reporte</h2>
+
+    <form id="formulario">
+        <input type="text" id="titulo"
+        placeholder="Título del reporte" required>
+
+        <input type="text" id="autor"
+        placeholder="Nombre del autor" required>
+
+        <textarea id="descripcion"
+        placeholder="Describe la situación" required></textarea>
+
+        <button type="submit">Enviar reporte</button>
+    </form>
+
+    <p id="mensaje"></p>
+
+    <h2>Reportes registrados</h2>
+    <div id="lista"></div>
+
+    <a href="/">Volver al inicio</a>
+</div>
+
+<script>
+const formulario = document.getElementById("formulario");
+const mensaje = document.getElementById("mensaje");
+const lista = document.getElementById("lista");
+
+async function cargarReportes() {
+    try {
+        const respuesta = await fetch("/api/reportes");
+        if (!respuesta.ok) throw new Error();
+
+        const reportes = await respuesta.json();
+        lista.replaceChildren();
+
+        reportes.forEach(r => {
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "reporte";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = r.titulo;
+
+            const autor = document.createElement("p");
+            autor.textContent = "Autor: " + r.autor;
+
+            const descripcion = document.createElement("p");
+            descripcion.textContent = r.descripcion;
+
+            tarjeta.append(titulo, autor, descripcion);
+            lista.appendChild(tarjeta);
+        });
+
+    } catch {
+        mensaje.textContent = "No se pudieron cargar los reportes.";
+    }
+}
+
+formulario.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const datos = {
+        titulo: document.getElementById("titulo").value,
+        autor: document.getElementById("autor").value,
+        descripcion: document.getElementById("descripcion").value
+    };
+
+    try {
+        const respuesta = await fetch("/api/reportes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) throw new Error(resultado.error);
+
+        mensaje.textContent = resultado.mensaje;
+        formulario.reset();
+        cargarReportes();
+
+    } catch (error) {
+        mensaje.textContent = error.message || "Error al guardar.";
+    }
+});
+
+cargarReportes();
+</script>
+
+</body>
+</html>
